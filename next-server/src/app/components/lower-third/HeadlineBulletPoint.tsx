@@ -1,9 +1,9 @@
 'use client';
 
-const HeadlineBulletPoint = () => {
+const HeadlineBulletPoint = ({colour}: {colour: string}) => {
 
   return (
-    <div className="w-4 h-4 bg-[#330066]" />
+    <div className={`w-4 h-4 ${colour ? `bg-[${colour}]` : ''}`} />
   );
 };
 

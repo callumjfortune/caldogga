@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import LowerThird from "../../components/lower-third/lower-third";
+import CustomLowerThird from "../../components/lower-third/CustomLowerThird";
+import NewsLowerThird from '@/app/components/lower-third/NewsLowerThird';
 
 export default function Home() {
   const [messages, setMessages] = useState<any[]>([]); // Store messages as an array of objects
@@ -46,7 +47,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-screen aspect-video p-24 pb-16 bg-[#330066]">
+    <div className="w-screen aspect-video --p-24 pb-16">
       <div className="w-full h-full flex flex-col bg-[4D0099]">
         <div id="upper-third" className="h-2/3 grid grid-cols-3 grid-rows-2">
           <div className="bg-white"></div>
@@ -58,7 +59,8 @@ export default function Home() {
         </div>
 
         <div id="lower-third" className="h-1/3">
-          <LowerThird messages={messages} /> {/* Pass messages as objects/parsed JSON */}
+          {/* <CustomLowerThird messages={messages} /> */}
+          <NewsLowerThird messages={messages} />
         </div>
       </div>
     </div>
