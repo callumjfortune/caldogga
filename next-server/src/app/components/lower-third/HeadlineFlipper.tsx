@@ -2,26 +2,20 @@ import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import HeadlineBulletPoint from './HeadlineBulletPoint';
 
-const HeadlineFlipper = () => {
+const HeadlineFlipper = ({headlines}: {headlines: string[]}) => {
     const containerRef = useRef<HTMLDivElement>(null);
-
-    const [headlines, setHeadlines] = useState<string[]>(["one", "two", "three"]);
-    const [headlineIndex, setHeadlineIndex] = useState<number>(0);
+    const [headlineIndex, setHeadlineIndex] = useState<number>(1);
 
     const cycle = () => {
+        if(headlines.length > 1) {
+            let boxOne = containerRef.current?.firstElementChild;
+            let boxTwo = containerRef.current?.lastElementChild;
 
-        let boxOne = containerRef.current?.firstElementChild;
-        let boxTwo = containerRef.current?.lastElementChild;
-
-        if (containerRef.current) {
-            if (containerRef.current && containerRef.current.lastElementChild) {
-                containerRef.current.lastElementChild.textContent = headlines[headlineIndex];
+            if (containerRef.current && boxTwo) {
+                (boxTwo as HTMLElement).getElementsByTagName('span')[0].textContent = headlines[headlineIndex];
             }
 
-        }
-        setHeadlineIndex((prevIndex) => (prevIndex === headlines.length - 1 ? 0 : prevIndex + 1));
-
-        setTimeout(() => {
+            setHeadlineIndex((prevIndex) => (prevIndex === headlines.length - 1 ? 0 : prevIndex + 1));
 
             if (boxOne && boxTwo) {
                 gsap.to(boxOne, {
@@ -35,33 +29,44 @@ const HeadlineFlipper = () => {
                     duration: 1,
                     ease: 'power2.inOut',
                     onComplete: () => {
-    
-                        containerRef.current?.removeChild(boxOne);
-                        containerRef.current?.appendChild(boxOne);
-
-                        (boxOne as HTMLElement).style.top = '100%';
-    
+                        if (containerRef.current) {
+                            containerRef.current.removeChild(boxOne);
+                            containerRef.current.appendChild(boxOne);
+                            (boxOne as HTMLElement).style.top = '100%';
+                        }
                     }
                 });
-    
             }
+        }
+    };
 
-        }, 1000);
-    
-    }
+    useEffect(() => {
+        const interval = setInterval(() => {
+            cycle();
+        }, 3000);
 
-    setInterval(() => {
-        cycle();
-    }, 3000);
+        return () => clearInterval(interval);
+    }, [headlineIndex]);
 
+    useEffect(() => {
+
+        console.log("headlines: ", headlines);
+
+    }, [headlines]);
 
     return (
         <div
             ref={containerRef}
             className="relative h-[5em] w-full overflow-hidden flex flex-col"
         >
-            <div style={{ top: '0%' }} className='w-full absolute min-h-[100%] text-[3em]'></div>
-            <div style={{ top: '100%' }} className='w-full absolute min-h-[100%] text-[3em]'></div>
+            <div style={{ top: '0%' }} className="w-full text-gray-600 font-[reithsanslt] absolute min-h-[100%] text-[3em] flex items-center gap-4">
+                <HeadlineBulletPoint colour="#b90000" />
+                <span className='font-[reithsans]'>{headlines[0]}</span>
+            </div>
+            <div style={{ top: '100%' }} className="w-full text-gray-600 font-[reithsanslt] absolute min-h-[100%] text-[3em] flex items-center gap-4">
+                <HeadlineBulletPoint colour="#b90000" />
+                <span className='font-[reithsans]'></span>
+            </div>
         </div>
     );
 };

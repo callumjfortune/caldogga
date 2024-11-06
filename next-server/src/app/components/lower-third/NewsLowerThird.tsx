@@ -143,6 +143,7 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
       messages.forEach((message) => {
         if (message.message.startsWith('updateHeadlines:')) {
           const newHeadlines = message.message.replace('updateHeadlines:', '').split('\n').filter(headline => headline.trim() !== '');
+          console.log('New headlines:', JSON.stringify(newHeadlines));
           setHeadlines(newHeadlines); // Update headlines
         }
 
@@ -190,7 +191,7 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
         </div>
       </div>
       <div className="flex px-[15%] bg-white">
-        <HeadlineFlipper />
+        <HeadlineFlipper headlines={headlines}/>
         <div ref={timeTabRef} className="px-4 bg-[#b90000] mt-[-1px] border-[#b90000] grid place-content-center">
           <div ref={divRef} className="text-white text-[3.5em] font-[reithsanslt]">
             {currentTime || '--:--'}

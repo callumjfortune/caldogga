@@ -1,15 +1,8 @@
 [
   {
-    "message": "bottomHeadlineClose"
+    "message": "updateHeadlines: one"
   },
   {
-    "message": "topHeadlineClose"
-  },
-  {
-    "message": "timeTabClose"
-  },
-  {
-    "message": "topHeadlineOpen"
+    "message": "updateHeadlines: one\ntwo"
   }
-]}
 ]
