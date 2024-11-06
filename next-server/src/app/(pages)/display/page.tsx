@@ -86,7 +86,7 @@ export default function Home() {
   }, [videoEnabled]);
 
   return (
-    <div className="w-screen aspect-video --p-24 pb-16">
+    <div className="w-screen aspect-video --p-24">
       <div className="w-full h-screen flex flex-col bg-[4D0099]">
         <div id="upper-third" className="flex-grow grid grid-cols-3 grid-rows-2">
           <div className=""></div>

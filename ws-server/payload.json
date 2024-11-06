@@ -169,5 +169,80 @@
   },
   {
     "message": "updateHeadlines: bello\nigufhcvb\njhgfdsdfg\nfdsdcvbn"
+  },
+  {
+    "message": "enableVideo"
+  },
+  {
+    "message": "updateHeadlines: I am a headline\nI am another headline\nI hate headlines"
+  },
+  {
+    "message": "updateHeadlines: headline 1\nheadline 2\nheadline 3"
+  },
+  {
+    "message": "bottomHeadlineClose"
+  },
+  {
+    "message": "topHeadlineClose"
+  },
+  {
+    "message": "topHeadlineOpen"
+  },
+  {
+    "message": "updateHeadlines: This is caldogga\nwelcome to caldogga\nask me what caldogga is"
+  },
+  {
+    "message": "timeTabClose"
+  },
+  {
+    "message": "timeTabOpen"
+  },
+  {
+    "message": "topHeadlineClose"
+  },
+  {
+    "message": "topHeadlineOpen"
+  },
+  {
+    "message": "topHeadlineClose"
+  },
+  {
+    "message": "bottomHeadlineOpen"
+  },
+  {
+    "message": "bottomHeadlineClose"
+  },
+  {
+    "message": "topHeadlineOpen"
+  },
+  {
+    "message": "enableVideo"
+  },
+  {
+    "message": "bottomHeadlineOpen"
+  },
+  {
+    "message": "topHeadlineClose"
+  },
+  {
+    "message": "bottomHeadlineClose"
+  },
+  {
+    "message": "updateHeadlines: This is caldogga\nTesting testing"
+  },
+  {
+    "message": "enableVideo"
+  },
+  {
+    "message": "updateHeadlines: testing,\ntesting123,\ntesting456"
+  },
+  {
+    "message": "updateHeadlines: testing\nheadline"
+  },
+  {
+    "message": "updateHeadlines: headline1\nheadline2"
+  },
+  {
+    "message": "updateHeadlines: headline1\nheadline2\nheadline3"
   }
 ]

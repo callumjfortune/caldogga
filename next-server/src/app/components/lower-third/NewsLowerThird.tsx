@@ -28,7 +28,7 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
     "This is a third headline that is also cool",
   ]);
 
-  // Animation for rotating headlines with seamless looping and pause
+  // Function to setup the animation
   const setupAnimation = () => {
     const $list = document.querySelector('.v-slides');
     const timeline = gsap.timeline({ repeat: -1 }); // Create a repeating timeline
@@ -61,8 +61,6 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
 
   // Update current time
   useEffect(() => {
-    setupAnimation();
-
     const updateCurrentTime = () => {
       setCurrentTime(`${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`);
     };
@@ -70,6 +68,11 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
     updateCurrentTime();
     const intervalId = setInterval(updateCurrentTime, 1000);
     return () => clearInterval(intervalId);
+  }, []);
+
+  // Re-run animation when headlines change
+  useEffect(() => {
+    setupAnimation();
   }, [headlines]);
 
   // Animation for top headline
@@ -139,7 +142,7 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
       messages.forEach((message) => {
         if (message.message.startsWith('updateHeadlines:')) {
           const newHeadlines = message.message.replace('updateHeadlines:', '').split('\n').filter(headline => headline.trim() !== '');
-          setHeadlines(newHeadlines);
+          setHeadlines(newHeadlines); // Update headlines
         }
 
         switch(message.message) {
@@ -172,8 +175,8 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
     <div className="w-full flex flex-col">
       <div className="grid grid-cols-3">
         <div ref={topHeadlineRef} className="overflow-hidden flex flex-col gap-4 py-4 w-full bg-[#b90000] px-[15%] col-span-3">
-          <h1 className='leading-[100%] ml-2 text-[5em] text-white'>Vishal Karri</h1>
-          <h2 className='leading-[100%] ml-2 text-[3.5em] text-white'>Software engineer</h2>
+          <h1 className='leading-[100%] ml-2 text-[5em] text-white'>Callum Fortune</h1>
+          <h2 className='leading-[100%] ml-2 text-[3.5em] text-white'>Caldogga creator</h2>
         </div>
         <div className="w-full bg-[#b90000] px-[15%] py-1 col-span-3">
           <div className='-ml-[2px] flex items-center text-white text-[3.3em]'>
@@ -202,6 +205,7 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
           </div>
         </div>
       </div>
+      <div className='bg-white h-16 w-full -mt-1'></div>
     </div>
   );
 };
