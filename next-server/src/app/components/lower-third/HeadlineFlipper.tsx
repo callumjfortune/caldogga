@@ -37,8 +37,9 @@ const HeadlineFlipper = ({ headlines }: { headlines: string[] }) => {
                             (boxOne as HTMLElement).style.top = '100%';
                         }
                     },
-                });
+                })
             }
+
         } else {
 
             if (containerRef.current && boxTwo) {
@@ -60,7 +61,7 @@ const HeadlineFlipper = ({ headlines }: { headlines: string[] }) => {
 
             return () => clearInterval(interval);
         }
-    }, [headlineIndex, headlines.length]); // Add headlines.length as dependency
+    }, [headlineIndex, headlines.length]);
 
     return (
         <div
