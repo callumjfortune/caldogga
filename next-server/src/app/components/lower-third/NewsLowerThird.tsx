@@ -24,9 +24,9 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
   const [bottomHeadlineOpen, setBottomHeadlineOpen] = useState<boolean | null>(null);
   const [timeTabOpen, setTimeTabOpen] = useState<boolean | null>(null);
   const [headlines, setHeadlines] = useState<string[]>([
-    "Breaking",
-    "This is a breaking story",
-    "This is a third headline that is also cool",
+    "one",
+    "Two",
+    "Three",
   ]);
 
   // Function to setup the animation
@@ -173,24 +173,31 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
     }
   }, [messages]);
 
+  useEffect(() => {
+
+
+    
+  }, [headlines]);
+
   return (
     <div className="w-full flex flex-col">
       <div className="grid grid-cols-3">
-        <div ref={topHeadlineRef} className="overflow-hidden flex flex-col gap-4 py-4 w-full bg-[#b90000] px-[15%] col-span-3">
+        <div ref={topHeadlineRef} className="overflow-hidden -mb-1 flex flex-col gap-4 py-4 w-full bg-[#b90000] px-[15%] col-span-3">
           <h1 className='leading-[100%] ml-2 text-[5em] text-white'>Callum Fortune</h1>
           <h2 className='leading-[100%] ml-2 text-[3.5em] text-white'>Caldogga creator</h2>
         </div>
-        <div className="w-full bg-[#b90000] px-[15%] py-1 col-span-3">
+        <div className="w-full -mb-1 bg-[#b90000] px-[15%] py-1 col-span-3">
           <div className='-ml-[2px] flex items-center text-white text-[3.3em]'>
             <div className='w-[200px]'><Logo /></div>
             <span className='font-[reithsansmd]'>NEWS</span>
           </div>
         </div>
-        <div ref={bottomHeadlineRef} className='w-full bg-[#b90000] px-[15%] col-span-3'>
+        <div ref={bottomHeadlineRef} className='w-full  bg-[#b90000] px-[15%] col-span-3'>
           <h2 className='text-[5em] leading-[100%] py-8 pb-16 text-white'>Americans also choosing who controls Congress</h2>
         </div>
       </div>
-      <div className="flex px-[15%] bg-white">
+      <div className="flex items-center px-[15%] bg-white">
+        {headlines.length > 0 && <HeadlineBulletPoint colour="#b90000" />}
         <HeadlineFlipper headlines={headlines}/>
         <div ref={timeTabRef} className="px-4 bg-[#b90000] mt-[-1px] border-[#b90000] grid place-content-center">
           <div ref={divRef} className="text-white text-[3.5em] font-[reithsanslt]">

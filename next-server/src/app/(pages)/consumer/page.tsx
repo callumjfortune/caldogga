@@ -102,6 +102,7 @@ export default function Consumer() {
         <textarea
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          className='border border-black'
         />
         <button onClick={(e) => {
           e.preventDefault();

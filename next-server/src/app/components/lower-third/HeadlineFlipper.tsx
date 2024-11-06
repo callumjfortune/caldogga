@@ -1,67 +1,67 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import HeadlineBulletPoint from './HeadlineBulletPoint';
 
 const HeadlineFlipper = ({ headlines }: { headlines: string[] }) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [headlineIndex, setHeadlineIndex] = useState<number>(1);
+    let counter = 0;
 
-    const cycle = () => {
+    const introduceNextHeadline = (headline: string) => {
 
         let boxOne = containerRef.current?.firstElementChild;
         let boxTwo = containerRef.current?.lastElementChild;
 
-        if (headlines.length > 1) {
+        if (containerRef.current && boxTwo) {
+            (boxTwo as HTMLElement).getElementsByTagName('span')[0].textContent = headline;
+        }
 
-            if (containerRef.current && boxTwo) {
-                (boxTwo as HTMLElement).getElementsByTagName('span')[0].textContent = headlines[headlineIndex];
-            }
+        if (boxOne && boxTwo) {
+            gsap.to(boxOne, {
+                top: '-=100%',
+                duration: 1,
+                ease: 'power2.inOut',
+            });
 
-            setHeadlineIndex((prevIndex) => (prevIndex === headlines.length - 1 ? 0 : prevIndex + 1));
-
-            if (boxOne && boxTwo) {
-                gsap.to(boxOne, {
-                    top: '-=100%',
-                    duration: 1,
-                    ease: 'power2.inOut',
-                });
-
-                gsap.to(boxTwo, {
-                    top: '-=100%',
-                    duration: 1,
-                    ease: 'power2.inOut',
-                    onComplete: () => {
-                        if (containerRef.current) {
-                            containerRef.current.removeChild(boxOne);
-                            containerRef.current.appendChild(boxOne);
-                            (boxOne as HTMLElement).style.top = '100%';
-                        }
-                    },
-                })
-            }
-
-        } else {
-
-            if (containerRef.current && boxTwo) {
-                (boxTwo as HTMLElement).getElementsByTagName('span')[0].textContent = headlines[headlineIndex];
-            }
-
-            if (containerRef.current && boxOne) {
-                (boxOne as HTMLElement).getElementsByTagName('span')[0].textContent = headlines[headlineIndex];
-            }
-
+            gsap.to(boxTwo, {
+                top: '-=100%',
+                duration: 1,
+                ease: 'power2.inOut',
+                onComplete: () => {
+                    if (containerRef.current) {
+                        containerRef.current.removeChild(boxOne);
+                        containerRef.current.appendChild(boxOne);
+                        (boxOne as HTMLElement).style.top = '100%';
+                    }
+                },
+            })
         }
     };
+    
 
     useEffect(() => {
-        if (headlines.length > 1) {
-            const interval = setInterval(() => {
-                cycle();
-            }, 3000);
+        const intervalId = setInterval(() => {
 
-            return () => clearInterval(interval);
-        }
-    }, [headlineIndex, headlines.length]);
+            console.log("using", headlines);
+
+            counter++;
+
+            let headline = headlines[counter % headlines.length];
+
+            introduceNextHeadline(headline);
+
+
+        }, 3000);
+
+        return () => clearInterval(intervalId);
+
+    }, [])
+
+    useEffect(() => {
+
+        console.log("HEADLINES", headlines);
+
+        counter = 0;
+
+    }, [headlines]);
 
     return (
         <div
@@ -72,16 +72,15 @@ const HeadlineFlipper = ({ headlines }: { headlines: string[] }) => {
                 style={{ top: '0%' }}
                 className="w-full text-gray-600 font-[reithsanslt] absolute min-h-[100%] text-[3em] flex items-center gap-4"
             >
-                <HeadlineBulletPoint colour="#b90000" />
-                <span className="font-[reithsans]">{headlines[0]}</span>
+                <span className="font-[reithsans] bg-red-200">{headlines[0]}</span>
             </div>
             <div
                 style={{ top: '100%' }}
                 className="w-full text-gray-600 font-[reithsanslt] absolute min-h-[100%] text-[3em] flex items-center gap-4"
             >
-                <HeadlineBulletPoint colour="#b90000" />
-                <span className="font-[reithsans]"></span>
+                <span className="font-[reithsans] bg-blue-200">test</span>
             </div>
+            
         </div>
     );
 };
