@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import HeadlineBulletPoint from './HeadlineBulletPoint';
 import { gsap } from 'gsap';
 import Logo from '../misc/logo';
+import HeadlineFlipper from './HeadlineFlipper';
 
 interface Message {
   message: string;
@@ -189,16 +190,7 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
         </div>
       </div>
       <div className="flex px-[15%] bg-white">
-        <div className="w-full h-[1.5em] text-gray-600 col-span-5 text-[3.5em] pl-3 flex flex-col overflow-hidden">
-          <ul className="h-[1em] v-slides relative">
-            {[...headlines, ...headlines].map((headline, index) => (
-              <li key={index} className="v-slide headline flex gap-6 items-center font-[reithsanslt]">
-                <HeadlineBulletPoint colour="#b90000" />
-                {headline}
-              </li>
-            ))}
-          </ul>
-        </div>
+        <HeadlineFlipper />
         <div ref={timeTabRef} className="px-4 bg-[#b90000] mt-[-1px] border-[#b90000] grid place-content-center">
           <div ref={divRef} className="text-white text-[3.5em] font-[reithsanslt]">
             {currentTime || '--:--'}
