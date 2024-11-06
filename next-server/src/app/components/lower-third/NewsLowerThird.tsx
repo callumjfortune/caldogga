@@ -15,16 +15,20 @@ interface LowerThirdProps {
 
 const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
   const divRef = useRef<HTMLDivElement>(null);
-  const [currentTime, setCurrentTime] = useState<string | null>(null); // Start with null
-
-  // Headlines array
-  const headlines = [
+  const topHeadlineRef = useRef<HTMLDivElement>(null);
+  const bottomHeadlineRef = useRef<HTMLDivElement>(null);
+  const timeTabRef = useRef<HTMLDivElement>(null);
+  const [currentTime, setCurrentTime] = useState<string | null>(null);
+  const [topHeadlineOpen, setTopHeadlineOpen] = useState<boolean | null>(null);
+  const [bottomHeadlineOpen, setBottomHeadlineOpen] = useState<boolean | null>(null);
+  const [timeTabOpen, setTimeTabOpen] = useState<boolean | null>(null);
+  const [headlines, setHeadlines] = useState<string[]>([
     "Breaking",
     "This is a breaking story",
     "This is a third headline that is also cool",
-  ];
+  ]);
 
-  // Animation effect setup
+  // Animation for rotating headlines with seamless looping and pause
   const setupAnimation = () => {
     const $list = document.querySelector('.v-slides');
     const timeline = gsap.timeline({ repeat: -1 }); // Create a repeating timeline
@@ -55,59 +59,146 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
     }
   };
 
+  // Update current time
   useEffect(() => {
-    setupAnimation(); // Setup animation once on mount
-    return () => {
-      gsap.killTweensOf('.v-slides'); // Cleanup animation on unmount
-    };
-  }, []); // Empty dependency array ensures this only runs once
+    setupAnimation();
 
-  useEffect(() => {
-    // Set the current time when the component mounts
     const updateCurrentTime = () => {
       setCurrentTime(`${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`);
     };
 
-    updateCurrentTime(); // Set initial time
-    const intervalId = setInterval(updateCurrentTime, 1000); // Update every second
-    return () => clearInterval(intervalId); // Cleanup interval on unmount
-  }, []);
+    updateCurrentTime();
+    const intervalId = setInterval(updateCurrentTime, 1000);
+    return () => clearInterval(intervalId);
+  }, [headlines]);
+
+  // Animation for top headline
+  useEffect(() => {
+    if (topHeadlineOpen !== null && topHeadlineRef.current) {
+      if (topHeadlineOpen) {
+        gsap.to(topHeadlineRef.current, {
+          height: "auto", // Target height when opened
+          opacity: 1,
+          duration: 0.8,
+          ease: "power2.out",
+        });
+      } else {
+        gsap.to(topHeadlineRef.current, {
+          height: 0, // Collapse height when closed
+          opacity: 0,
+          duration: 0.8,
+          ease: "power2.in",
+        });
+      }
+    }
+  }, [topHeadlineOpen]);
 
   useEffect(() => {
-    if (messages.length > 0 ) {
-      alert(JSON.stringify(messages));
+    if (bottomHeadlineOpen !== null && bottomHeadlineRef.current) {
+      if (bottomHeadlineOpen) {
+        gsap.to(bottomHeadlineRef.current, {
+          height: "auto", // Target height when opened
+          opacity: 1,
+          duration: 0.8,
+          ease: "power2.out",
+        });
+      } else {
+        gsap.to(bottomHeadlineRef.current, {
+          height: 0, // Collapse height when closed
+          opacity: 0,
+          duration: 0.8,
+          ease: "power2.in",
+        });
+      }
+    }
+  }, [bottomHeadlineOpen]);
+
+  useEffect(() => {
+    if (timeTabOpen !== null && timeTabRef.current) {
+      if (timeTabOpen) {
+        gsap.to(timeTabRef.current, {
+          height: "auto", // Target height when opened
+          opacity: 1,
+          duration: 0.8,
+          ease: "power2.out",
+        });
+      } else {
+        gsap.to(timeTabRef.current, {
+          height: 0, // Collapse height when closed
+          opacity: 0,
+          duration: 0.8,
+          ease: "power2.in",
+        });
+      }
+    }
+  }, [timeTabOpen]);
+
+  // Listen for messages
+  useEffect(() => {
+    if (messages.length > 0) {
+      messages.forEach((message) => {
+        if (message.message.startsWith('updateHeadlines:')) {
+          const newHeadlines = message.message.replace('updateHeadlines:', '').split('\n').filter(headline => headline.trim() !== '');
+          setHeadlines(newHeadlines);
+        }
+
+        switch(message.message) {
+          case 'topHeadlineOpen':
+            setTopHeadlineOpen(true);
+            break;
+          case 'topHeadlineClose':
+            setTopHeadlineOpen(false);
+            break;
+          case 'bottomHeadlineOpen':
+            setBottomHeadlineOpen(true);
+            break;
+          case 'bottomHeadlineClose':
+            setBottomHeadlineOpen(false);
+            break;
+          case 'timeTabOpen':
+            setTimeTabOpen(true);
+            break;
+          case 'timeTabClose':
+            setTimeTabOpen(false);
+            break;
+          default:
+            break;
+        }
+      });
     }
   }, [messages]);
 
   return (
-    <div className="w-full h-full flex flex-col">
-      <div className="h-2/6"></div>
-      <div className="h-3/6 grid grid-cols-3">
-        <div className="w-full bg-[#b90000] px-[15%] pt-4 col-span-3">
-
-          <div className='-ml-[2px] flex items-center text-white text-[3em]'>
+    <div className="w-full flex flex-col">
+      <div className="grid grid-cols-3">
+        <div ref={topHeadlineRef} className="overflow-hidden flex flex-col gap-4 py-4 w-full bg-[#b90000] px-[15%] col-span-3">
+          <h1 className='leading-[100%] ml-2 text-[5em] text-white'>Vishal Karri</h1>
+          <h2 className='leading-[100%] ml-2 text-[3.5em] text-white'>Software engineer</h2>
+        </div>
+        <div className="w-full bg-[#b90000] px-[15%] py-1 col-span-3">
+          <div className='-ml-[2px] flex items-center text-white text-[3.3em]'>
             <div className='w-[200px]'><Logo /></div>
-            <span className=''>NEWS</span>
+            <span className='font-[reithsansmd]'>NEWS</span>
           </div>
-
-          <h1 className='leading-[100%] uppercase text-[10em] text-white'>Breaking</h1>
-
+        </div>
+        <div ref={bottomHeadlineRef} className='w-full bg-[#b90000] px-[15%] col-span-3'>
+          <h2 className='text-[5em] leading-[100%] py-8 pb-16 text-white'>Americans also choosing who controls Congress</h2>
         </div>
       </div>
-      <div className="h-1/6 flex px-[15%]">
-        <div className="w-full text-[#b90000] col-span-5 text-[3.75em] pl-3 flex flex-col overflow-hidden">
-          <ul className="v-slides relative">
-            {[...headlines, ...headlines].map((headline, index) => ( // Duplicate headlines for seamless scroll
-              <li key={index} className="v-slide headline flex gap-6 items-center">
+      <div className="flex px-[15%] bg-white">
+        <div className="w-full h-[1.5em] text-gray-600 col-span-5 text-[3.5em] pl-3 flex flex-col overflow-hidden">
+          <ul className="h-[1em] v-slides relative">
+            {[...headlines, ...headlines].map((headline, index) => (
+              <li key={index} className="v-slide headline flex gap-6 items-center font-[reithsanslt]">
                 <HeadlineBulletPoint colour="#b90000" />
                 {headline}
               </li>
             ))}
           </ul>
         </div>
-        <div className="px-4 bg-[#b90000] mt-[-1px] border-[#b90000] grid place-content-center">
-          <div ref={divRef} className="text-white text-[3.75em]">
-            {currentTime || '--:--'} {/* Fallback for when currentTime is null */}
+        <div ref={timeTabRef} className="px-4 bg-[#b90000] mt-[-1px] border-[#b90000] grid place-content-center">
+          <div ref={divRef} className="text-white text-[3.5em] font-[reithsanslt]">
+            {currentTime || '--:--'}
           </div>
         </div>
       </div>

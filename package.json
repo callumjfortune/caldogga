@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"cd next-server && npm i && npm run dev\" \"cd ws-server && npm run start\"",
+    "start": "concurrently \"cd next-server && npm i && npm run dev\" \"cd ws-server && npm i && npm run start\"",
     "test": "npm run test"
   },
   "repository": {

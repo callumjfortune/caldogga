@@ -32,12 +32,10 @@ export default function Consumer() {
     };
   }, []);
 
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const sendMessage = (message: string) => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-      wsRef.current.send(JSON.stringify({ message: inputValue }));
-      console.log('Sent:', inputValue);
+      wsRef.current.send(JSON.stringify({ message: message }));
+      console.log('Sent:', message);
       setInputValue(''); // Clear input after sending
     } else {
       console.error('WebSocket is not open. Unable to send message.');
@@ -46,16 +44,70 @@ export default function Consumer() {
 
   return (
     <div className='w-screen h-screen grid place-content-center text-[4em]'>
-      <form onSubmit={submit} className='bg-gray-200 p-4'>
-        <input
-          type="text"
-          placeholder="Enter a string"
+      <div>
+        <button onClick={(e) => {
+          e.preventDefault();
+          sendMessage('topHeadlineOpen');
+        }} >Open top headline</button>
+
+        <button onClick={(e) => {
+          e.preventDefault();
+          sendMessage('topHeadlineClose');
+        }} >Close top headline</button>
+
+        <button onClick={(e) => {
+          e.preventDefault();
+          sendMessage('bottomHeadlineOpen');
+        }} >Open bottom headline</button>
+
+        <button onClick={(e) => {
+          e.preventDefault();
+          sendMessage('bottomHeadlineClose');
+        }} >Close bottom headline</button>
+
+        <button onClick={(e) => {
+          e.preventDefault();
+          sendMessage('topHeadlineOpen');
+          sendMessage('bottomHeadlineOpen');
+        }} >Open both</button>
+
+        <button onClick={(e) => {
+          e.preventDefault();
+          sendMessage('topHeadlineClose');
+          sendMessage('bottomHeadlineClose');
+        }} >Close both</button>
+
+        <button onClick={(e) => {
+          e.preventDefault();
+          sendMessage('timeTabOpen');
+        }} >Open time</button>
+
+        <button onClick={(e) => {
+          e.preventDefault();
+          sendMessage('timeTabClose');
+        }} >Close time</button>
+
+        <button onClick={(e) => {
+          e.preventDefault();
+          sendMessage('enableVideo');
+        }} >Enable video</button>
+
+        <button onClick={(e) => {
+          e.preventDefault();
+          sendMessage('disableVideo');
+        }} >Disable video</button>
+      </div>
+
+      <div>
+        <textarea
           value={inputValue}
-          className='px-4 py-2'
           onChange={(e) => setInputValue(e.target.value)}
         />
-      </form>
-
+        <button onClick={(e) => {
+          e.preventDefault();
+          sendMessage('updateHeadlines: ' + inputValue);
+        }}>Update headlines</button>
+      </div>
     </div>
   );
 }

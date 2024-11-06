@@ -2,10 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: reithsans;
+  src: url(../assets/BBCReithSerif_W_Rg.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: reithsansmd;
+  src: url(../assets/BBCReithSans_W_Md.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: reithsanslt;
+  src: url(../assets/BBCReithSans_W_Md.woff2) format('woff2');
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
 * {
-
+  margin: 0;
+  padding: 0;
+  font-family: reithsans, Arial, Helvetica, sans-serif;
 }
+
+.switch-toggle {
+  width: 10em;
+}
+
+.switch-toggle label:not(.disabled) {
+  cursor: pointer;
+}
+
+button {
+  font-size: 0.5em;
+  background-color: lightgrey;
+  padding: 5px 10px;
+  margin: 2px;
+}
+
+
