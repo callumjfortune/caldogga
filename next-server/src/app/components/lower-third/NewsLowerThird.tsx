@@ -24,9 +24,9 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
   const [bottomHeadlineOpen, setBottomHeadlineOpen] = useState<boolean | null>(null);
   const [timeTabOpen, setTimeTabOpen] = useState<boolean | null>(null);
   const [headlines, setHeadlines] = useState<string[]>([
-    "one",
-    "Two",
-    "Three",
+    "Headline one",
+    "Headline two",
+    "headline three",
   ]);
 
   // Function to setup the animation
@@ -183,8 +183,8 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
     <div className="w-full flex flex-col">
       <div className="grid grid-cols-3">
         <div ref={topHeadlineRef} className="overflow-hidden -mb-1 flex flex-col gap-4 py-4 w-full bg-[#b90000] px-[15%] col-span-3">
-          <h1 className='leading-[100%] ml-2 text-[5em] text-white'>Callum Fortune</h1>
-          <h2 className='leading-[100%] ml-2 text-[3.5em] text-white'>Caldogga creator</h2>
+          <h1 className='leading-[100%] ml-2 text-[5em] text-white font-[reithserif] '>Callum Fortune</h1>
+          <h2 className='leading-[100%] ml-2 text-[3.5em] text-white font-[reithserif]'>Caldogga creator</h2>
         </div>
         <div className="w-full -mb-1 bg-[#b90000] px-[15%] py-1 col-span-3">
           <div className='-ml-[2px] flex items-center text-white text-[3.3em]'>
@@ -193,7 +193,7 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
           </div>
         </div>
         <div ref={bottomHeadlineRef} className='w-full  bg-[#b90000] px-[15%] col-span-3'>
-          <h2 className='text-[5em] leading-[100%] py-8 pb-16 text-white'>Americans also choosing who controls Congress</h2>
+          <h2 className='text-[5em] leading-[100%] py-8 pb-16 text-white font-[reithserif]'>Americans also choosing who controls Congress</h2>
         </div>
       </div>
       <div className="flex items-center px-[15%] bg-white">
