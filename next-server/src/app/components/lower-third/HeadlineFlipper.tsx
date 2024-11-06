@@ -45,6 +45,10 @@ const HeadlineFlipper = ({ headlines }: { headlines: string[] }) => {
                 (boxTwo as HTMLElement).getElementsByTagName('span')[0].textContent = headlines[headlineIndex];
             }
 
+            if (containerRef.current && boxOne) {
+                (boxOne as HTMLElement).getElementsByTagName('span')[0].textContent = headlines[headlineIndex];
+            }
+
         }
     };
 
@@ -61,7 +65,7 @@ const HeadlineFlipper = ({ headlines }: { headlines: string[] }) => {
     return (
         <div
             ref={containerRef}
-            className="relative h-[5em] w-full overflow-hidden flex flex-col"
+            className={`${headlines.length > 0 ? 'flex flex-col' : 'opacity-0'} relative h-[5em] w-full overflow-hidden`}
         >
             <div
                 style={{ top: '0%' }}

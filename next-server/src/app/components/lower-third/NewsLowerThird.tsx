@@ -141,8 +141,8 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
   useEffect(() => {
     if (messages.length > 0) {
       messages.forEach((message) => {
-        if (message.message.startsWith('updateHeadlines:')) {
-          const newHeadlines = message.message.replace('updateHeadlines:', '').split('\n').filter(headline => headline.trim() !== '');
+        if (message.message.startsWith('updateHeadlines: ')) {
+          const newHeadlines = message.message.replace('updateHeadlines: ', '').split('\n').filter(headline => headline.trim() !== '');
           console.log('New headlines:', JSON.stringify(newHeadlines));
           setHeadlines(newHeadlines); // Update headlines
         }
