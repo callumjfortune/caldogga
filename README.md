@@ -4,4 +4,4 @@ Running the app is simple and will spin up a next server and a websocket server 
 
 To start the project run:
 
-npm i npm run start
+`npm i && npm run start`
