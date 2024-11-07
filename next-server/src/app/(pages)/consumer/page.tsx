@@ -43,71 +43,61 @@ export default function Consumer() {
   };
 
   return (
-    <div className='w-screen h-screen grid place-content-center text-[4em]'>
-      <div>
+    <div className='text-[3em]'>
+      <div className='grid grid-cols-4'>
         <button onClick={(e) => {
           e.preventDefault();
           sendMessage('topHeadlineOpen');
-        }} >Open top headline</button>
+        }} className='bg-blue-400'>Open Introduction</button>
 
         <button onClick={(e) => {
           e.preventDefault();
           sendMessage('topHeadlineClose');
-        }} >Close top headline</button>
+        }} className='bg-blue-400'>Close introduction</button>
 
         <button onClick={(e) => {
           e.preventDefault();
           sendMessage('bottomHeadlineOpen');
-        }} >Open bottom headline</button>
+        }} className='bg-red-400'>Open headline</button>
 
         <button onClick={(e) => {
           e.preventDefault();
           sendMessage('bottomHeadlineClose');
-        }} >Close bottom headline</button>
-
-        <button onClick={(e) => {
-          e.preventDefault();
-          sendMessage('topHeadlineOpen');
-          sendMessage('bottomHeadlineOpen');
-        }} >Open both</button>
-
-        <button onClick={(e) => {
-          e.preventDefault();
-          sendMessage('topHeadlineClose');
-          sendMessage('bottomHeadlineClose');
-        }} >Close both</button>
+        }} className='bg-red-400'>Close headline</button>
 
         <button onClick={(e) => {
           e.preventDefault();
           sendMessage('timeTabOpen');
-        }} >Open time</button>
+        }} className='bg-green-400'>Open time</button>
 
         <button onClick={(e) => {
           e.preventDefault();
           sendMessage('timeTabClose');
-        }} >Close time</button>
+        }} className='bg-green-400'>Close time</button>
 
         <button onClick={(e) => {
           e.preventDefault();
           sendMessage('enableVideo');
-        }} >Enable video</button>
+        }} className='bg-pink-400'>Enable video</button>
 
         <button onClick={(e) => {
           e.preventDefault();
           sendMessage('disableVideo');
-        }} >Disable video</button>
+        }} className='bg-pink-400'>Disable video</button>
       </div>
 
-      <div>
+      <div className='w-full flex flex-col p-4'>
         <textarea
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          className='border border-black'
+          placeholder='Flipper headlines (seperate by newlines)'
+          className='border text-[0.5em] p-4 border-black w-full'
         />
         <button onClick={(e) => {
           e.preventDefault();
           sendMessage('updateHeadlines: ' + inputValue);
-        }}>Update headlines</button>
+        }} 
+        className='w-full bg-blue-400'>Update flipper (seperate by newlines)</button>
       </div>
     </div>
   );

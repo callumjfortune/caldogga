@@ -24,9 +24,9 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
   const [bottomHeadlineOpen, setBottomHeadlineOpen] = useState<boolean | null>(null);
   const [timeTabOpen, setTimeTabOpen] = useState<boolean | null>(null);
   const [headlines, setHeadlines] = useState<string[]>([
-    "Headline one",
-    "Headline two",
-    "headline three",
+    "HEADLINES",
+    "Caldogga works as expected",
+    "bbc.co.uk/news",
   ]);
 
   // Function to setup the animation
@@ -81,18 +81,46 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
     if (topHeadlineOpen !== null && topHeadlineRef.current) {
       if (topHeadlineOpen) {
         gsap.to(topHeadlineRef.current, {
-          height: "auto", // Target height when opened
-          opacity: 1,
-          duration: 0.8,
-          ease: "power2.out",
+          height: "14em", // Target height when opened
+          paddingTop: "1.5rem",
+          paddingBottom: "1.5rem",
+          duration: 1.2,
+          ease: "power4.out",
         });
+
+        gsap.to(topHeadlineRef.current.firstElementChild, {
+          marginTop: "0", // Target height when opened
+          duration: 1.2,
+          ease: "power4.out",
+        });
+
+        gsap.to(topHeadlineRef.current.lastElementChild, {
+          marginTop: "0", // Target height when opened
+          duration: 1.2,
+          ease: "power4.out",
+        });
+
       } else {
         gsap.to(topHeadlineRef.current, {
           height: 0, // Collapse height when closed
-          opacity: 0,
-          duration: 0.8,
-          ease: "power2.in",
+          paddingTop: "0",
+          paddingBottom: "0",
+          duration: 1.2,
+          ease: "power4.out",
         });
+
+        gsap.to(topHeadlineRef.current.firstElementChild, {
+          marginTop: "100px", // Target height when opened
+          duration: 1.2,
+          ease: "power4.out",
+        });
+
+        gsap.to(topHeadlineRef.current.lastElementChild, {
+          marginTop: "300px", // Target height when opened
+          duration: 1.2,
+          ease: "power4.out",
+        });
+
       }
     }
   }, [topHeadlineOpen]);
@@ -101,18 +129,30 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
     if (bottomHeadlineOpen !== null && bottomHeadlineRef.current) {
       if (bottomHeadlineOpen) {
         gsap.to(bottomHeadlineRef.current, {
-          height: "auto", // Target height when opened
-          opacity: 1,
-          duration: 0.8,
-          ease: "power2.out",
+          height: "10em", // Target height when opened
+          duration: 1.2,
+          ease: "power4.out",
         });
+
+        gsap.to(bottomHeadlineRef.current.firstElementChild, {
+          marginTop: "0", // Target height when opened
+          duration: 1.2,
+          ease: "power4.out",
+        });
+
       } else {
         gsap.to(bottomHeadlineRef.current, {
           height: 0, // Collapse height when closed
-          opacity: 0,
-          duration: 0.8,
-          ease: "power2.in",
+          duration: 1.2,
+          ease: "power4.out",
         });
+
+        gsap.to(bottomHeadlineRef.current.firstElementChild, {
+          marginTop: "150px", // Target height when opened
+          duration: 1.2,
+          ease: "power4.out",
+        });
+
       }
     }
   }, [bottomHeadlineOpen]);
@@ -182,22 +222,22 @@ const NewsLowerThird: React.FC<LowerThirdProps> = ({ messages }) => {
   return (
     <div className="w-full flex flex-col">
       <div className="grid grid-cols-3">
-        <div ref={topHeadlineRef} className="overflow-hidden -mb-1 flex flex-col gap-4 py-4 w-full bg-[#b90000] px-[15%] col-span-3">
+        <div ref={topHeadlineRef} className="overflow-hidden -mb-1 flex flex-col w-full gap-8 py-6 bg-[#b90000] px-[15%] col-span-3">
           <h1 className='leading-[100%] ml-2 text-[5em] text-white font-[reithserif] '>Callum Fortune</h1>
           <h2 className='leading-[100%] ml-2 text-[3.5em] text-white font-[reithserif]'>Caldogga creator</h2>
         </div>
-        <div className="w-full -mb-1 bg-[#b90000] px-[15%] py-1 col-span-3">
+        <div className="w-full -mb-1 bg-[#b90000] px-[15%] pb-1 col-span-3">
           <div className='-ml-[2px] flex items-center text-white text-[3.3em]'>
             <div className='w-[200px]'><Logo /></div>
             <span className='font-[reithsansmd]'>NEWS</span>
           </div>
         </div>
         <div ref={bottomHeadlineRef} className='w-full  bg-[#b90000] px-[15%] col-span-3'>
-          <h2 className='text-[5em] leading-[100%] py-8 pb-16 text-white font-[reithserif]'>Americans also choosing who controls Congress</h2>
+          <h2 className='text-[5em] leading-[100%] ml-4 py-8 pb-16 text-white font-[reithserif]'>Americans also choosing who controls Congress</h2>
         </div>
       </div>
       <div className="flex items-center px-[15%] bg-white">
-        {headlines.length > 0 && <HeadlineBulletPoint colour="#b90000" />}
+        {headlines.length > 0 && <div className='ml-4'><HeadlineBulletPoint colour="#b90000" /></div>}
         <HeadlineFlipper headlines={headlines}/>
         <div ref={timeTabRef} className="px-4 bg-[#b90000] mt-[-1px] border-[#b90000] grid place-content-center">
           <div ref={divRef} className="text-white text-[3.5em] font-[reithsanslt]">
